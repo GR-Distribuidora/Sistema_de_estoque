@@ -136,7 +136,7 @@ export default function Dashboard({ produtos, dashboard }) {
                             className="mt-3 w-100"
                             style={{ height: 400 }}
                             title={"Top 10 produtos"}
-                            description={"Acompanhe aqui os 10 produtos mais vendidos de hoje"}
+                            description={"Acompanhe aqui os 10 produtos mais vendidos"}
                         >
                             <BarChart
                                 label={'nomPro'}
