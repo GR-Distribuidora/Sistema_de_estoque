@@ -89,7 +89,7 @@ export default function Clientes({ clientes, estados }) {
         })
     }
 
-    const getAddress = async (cep) => {
+    const getAddress = async (cep) => { // Retorna os dados do endereço a partir do CEP passado por parâmetro
         if(cep === '')
             return
 
