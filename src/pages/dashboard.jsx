@@ -35,8 +35,55 @@ function ProdutosPrestesAVencer(produtos) {
     })
 }
 
+function OrganizarDadosDashboard(date, produtos, entEstoque, saiEstoque) {
+    const dashboard = {
+        date: date,
+        indicadores: { vlrTotal: 0, qtdProd: 0, qtdEnt: 0, qtdSai: 0 },
+        produtosMaisVendidos: [],
+        estoqueMinimo: [],
+        proximosVencer: ProdutosPrestesAVencer(entEstoque)
+    }
+
+    produtos.forEach(l => {
+        dashboard.indicadores.vlrTotal += l.preVen * l.estAtu
+        dashboard.indicadores.qtdProd += Number(l.estAtu)
+    })
+
+    dashboard.indicadores.qtdEnt = entEstoque.filter(l => l.datEnt === date).length
+    dashboard.indicadores.qtdSai = saiEstoque.filter(l => l.datSai === date).length
+    dashboard.estoqueMinimo = produtos.filter(l => Number(l.estAtu) <= Number(l.estMin))
+
+    // const produtosSaida = saiEstoque.filter(l => l.datSai === date).sort((a, b) => parseFloat(a.qtdSai) - parseFloat(b.qtdSai))
+    const produtosSaida = saiEstoque.sort((a, b) => parseFloat(a.qtdSai) - parseFloat(b.qtdSai))
+
+    for(let i = 0; i < 10; i++) {
+        if(produtosSaida[i] == undefined)
+            break;
+
+        const index = dashboard.produtosMaisVendidos.findIndex(l => l.codPro == produtosSaida[i].codPro)
+
+        if(index <= -1) {
+            dashboard.produtosMaisVendidos.push({
+                ...produtosSaida[i],
+                nomPro: seeField(produtos, 'codBar', produtosSaida[i].codPro, 'nomPro', 'PRODUTO NÃO ENCONTRADO OU EXCLUÍDO')
+            })
+        } else {
+            dashboard.produtosMaisVendidos[index].qtdSai += Number(produtosSaida[i].qtdSai)
+        }
+    }
+
+    return dashboard
+}
+
 export async function getServerSideProps() {
-    const date = new Date().toLocaleDateString()
+    const fixNum = num => num.toString().length == 1 ? '0' + num : num
+
+    let date = new Date()
+    const day = date.getDate()
+    const month = fixNum(date.getMonth() + 1)
+    const year = date.getFullYear()
+
+    date = (day + '/' + month + '/' + year)
 
     const listData = await Promise.all([
         GETData({ table: "produtos" }),
@@ -44,50 +91,10 @@ export async function getServerSideProps() {
         GETData({ table: "saida-estoque" })
     ])
 
-    function OrganizarDadosDashboard(produtos, entEstoque, saiEstoque) {
-        const dashboard = {
-            date: date,
-            indicadores: { vlrTotal: 0, qtdProd: 0, qtdEnt: 0, qtdSai: 0 },
-            produtosMaisVendidos: [],
-            estoqueMinimo: [],
-            proximosVencer: ProdutosPrestesAVencer(entEstoque)
-        }
-
-        produtos.forEach(l => {
-            dashboard.indicadores.vlrTotal += l.preVen * l.estAtu
-            dashboard.indicadores.qtdProd += Number(l.estAtu)
-        })
-
-        dashboard.indicadores.qtdEnt = entEstoque.filter(l => l.datEnt === date).length
-        dashboard.indicadores.qtdSai = saiEstoque.filter(l => l.datSai === date).length
-        dashboard.estoqueMinimo = produtos.filter(l => Number(l.estAtu) <= Number(l.estMin))
-
-        // const produtosSaida = saiEstoque.filter(l => l.datSai === date).sort((a, b) => parseFloat(a.qtdSai) - parseFloat(b.qtdSai))
-        const produtosSaida = saiEstoque.sort((a, b) => parseFloat(a.qtdSai) - parseFloat(b.qtdSai))
-
-        for(let i = 0; i < 10; i++) {
-            if(produtosSaida[i] == undefined)
-                break;
-
-            const index = dashboard.produtosMaisVendidos.findIndex(l => l.codPro == produtosSaida[i].codPro)
-
-            if(index <= -1) {
-                dashboard.produtosMaisVendidos.push({
-                    ...produtosSaida[i],
-                    nomPro: seeField(produtos, 'codBar', produtosSaida[i].codPro, 'nomPro', 'PRODUTO NÃO ENCONTRADO OU EXCLUÍDO')
-                })
-            } else {
-                dashboard.produtosMaisVendidos[index].qtdSai += Number(produtosSaida[i].qtdSai)
-            }
-        }
-
-        return dashboard
-    }
-
     return {
         props: {
             produtos: listData[0],
-            dashboard: OrganizarDadosDashboard(listData[0], listData[1], listData[2])
+            dashboard: OrganizarDadosDashboard(date, listData[0], listData[1], listData[2])
         }
     }
 }
