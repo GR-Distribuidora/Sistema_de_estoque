@@ -264,7 +264,7 @@ export default function EntradaEstoque({ entradaEstoque, fornecedores, produtos 
                     />
 
                     <InputText
-                        required
+                        // required
                         label='Lote'
                         data={{ value: formData.codLot.toUpperCase() }}
                         onChange={e => setFormData({ ...formData, codLot: e.target.value })}
