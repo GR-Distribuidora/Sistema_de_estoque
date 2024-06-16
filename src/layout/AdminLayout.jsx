@@ -78,8 +78,8 @@ export default function AdminLayout({ children }) {
                         }
                     </nav>
 
-                    <section className={`position-${windowWidth <= 576 ? 'static mt-2' : 'absolute'} text-center w-100`} style={{ fontSize: 14, bottom: 0 }}>
-                        Desenvolvido por Joane Amorim e Heloísa
+                    <section className={`position-${windowWidth <= 576 ? 'static mt-2' : 'absolute'} text-center w-100`} style={{ fontSize: 12, bottom: 0 }}>
+                        Desenvolvido por Joane Amorim e Heloísa Souza
                     </section>
                 </div>
 
