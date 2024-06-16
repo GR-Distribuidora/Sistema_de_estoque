@@ -1,0 +1,31 @@
+.navbarToggler {
+    color: white;
+}
+
+.navbarToggler:focus,
+.navbarToggler:active,
+.navbarToggler-icon:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+.dropdown>a::after {
+    color: white;
+}
+
+.itemNavbar {
+    margin: 0;
+    display: inline-block;
+}
+
+.itemNavbar:after {
+    content: '';
+    display: block;
+    transform: scaleX(0);
+    border-bottom: solid 3px #EFEFEF;
+    transition: transform 250ms ease-in-out;
+}
+
+.itemNavbar:hover:after {
+    transform: scaleX(1);
+}
