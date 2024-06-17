@@ -148,6 +148,7 @@ export default function SaidaEstoque({ saidaEstoque, clientes, produtos }) {
                         { title: 'Quantidade', sync: 'qtdSai' },
                         { title: 'Valor unitário', sync: 'codPro', format: e => CurrencyMask(seeField(listaProdutos, 'codBar', e, 'preVen'), 'format') },
                         { title: 'Valor total', sync: 'codPro', format: (e, row) => CurrencyMask(seeField(listaProdutos, 'codBar', e, 'preVen') * row.qtdSai, 'format') },
+                        { title: 'Saída', sync: 'datSai' },
                     ]}
                     showDeleteButton={async (row) => {
                         if(!confirm('Deseja realmente excluir esse registro?'))
