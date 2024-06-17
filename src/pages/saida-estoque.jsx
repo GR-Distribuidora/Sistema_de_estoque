@@ -196,6 +196,7 @@ export default function SaidaEstoque({ saidaEstoque, clientes, produtos }) {
                         labelDesc={'desPro'}
                         options={listaProdutos}
                         value={formData.codPro}
+                        optionDisabled={listaProdutos.filter(f => !f.sitPro).map(l => l.codBar)}
                         onChange={e => setFormData({ ...formData, codPro: { ...formData.codPro, value: e } })}
                         onInputChange={e => setFormData({ ...formData, codPro: { ...formData.codPro, inputValue: e } })}
                         filter={(options) => {
