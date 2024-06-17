@@ -79,7 +79,8 @@ export async function getServerSideProps() {
     const fixNum = num => num.toString().length == 1 ? '0' + num : num
 
     let date = new Date()
-    const day = fixNum(date.getDate())
+    // const day = fixNum(date.getDate())
+    const day = date.getDate()
     const month = fixNum(date.getMonth() + 1)
     const year = date.getFullYear()
 
