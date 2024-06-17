@@ -79,12 +79,14 @@ export async function getServerSideProps() {
     const fixNum = num => num.toString().length == 1 ? '0' + num : num
 
     let date = new Date()
-    // const day = fixNum(date.getDate())
+    date = date.toLocaleDateString('pt-BR', { timeZone: 'America/Sao_Paulo' })
+
+    /*
     const day = date.getDate()
     const month = fixNum(date.getMonth() + 1)
     const year = date.getFullYear()
-
     date = (day + '/' + month + '/' + year)
+    */
 
     const listData = await Promise.all([
         GETData({ table: "produtos" }),
