@@ -21,7 +21,7 @@ export async function getServerSideProps() {
 
     return {
         props: {
-            saidaEstoque: listData[0].reverse(),
+            saidaEstoque: orderByDate(listData[0]),
             clientes: listData[1],
             produtos: listData[2]
         }
@@ -29,6 +29,28 @@ export async function getServerSideProps() {
 }
 
 const seeField = (list, fieldKey, value, field) => list.find(p => p[fieldKey] == value) === undefined ? '' : list.find(p => p[fieldKey] == value)[field]
+
+const orderByDate = list => {
+    // Função para converter a data do formato dd/mm/yyyy para yyyy/mm/dd
+    function converterDataFormato(data) {
+        let partes = data.split('/');
+        return `${partes[2]}/${partes[1]}/${partes[0]}`;
+    }
+
+    // Ordenar o array pelo campo datSai (data de saída) da mais recente para a mais antiga
+    list.sort((a, b) => {
+        // Converter as datas para um formato comparável (yyyy/mm/dd)
+        let dataA = converterDataFormato(a.datSai)
+        let dataB = converterDataFormato(b.datSai)
+        
+        // Comparar as datas convertidas
+        if (dataA < dataB) return 1 // se a data de A for menor, retorna 1 (para ordenar de forma decrescente)
+        else if (dataA > dataB) return -1 // se a data de A for maior, retorna -1 (para ordenar de forma decrescente)
+        else return 0 // se forem iguais, retorna 0
+    })
+
+    return list
+}
 
 export default function SaidaEstoque({ saidaEstoque, clientes, produtos }) {
     const [load, setLoad] = useState(false)
@@ -56,7 +78,7 @@ export default function SaidaEstoque({ saidaEstoque, clientes, produtos }) {
             if(!isDelete && res.length === 0)
                 return setSnack({ open: true, txt: 'Voce ainda não possui nenhuma saída no estoque', color: 'info' })
 
-            setRows(res.reverse())
+            setRows(orderByDate(res))
             const produtosAtualizados = await GETData({ table: "produtos" })
             setListaProdutos(produtosAtualizados)
         })
