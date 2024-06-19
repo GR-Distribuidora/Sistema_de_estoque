@@ -213,7 +213,10 @@ export default function Fornecedores({ fornecedores }) {
                         required
                         label='CPF/CNPJ'
                         data={{ value: formData.cnpFor }}
-                        onChange={e => setFormData({ ...formData, cnpFor: e.target.value })}
+                        onChange={e => {
+                            if((/^[\d.\/\-]+$/).test(e.target.value) || e.target.value == '')
+                                setFormData({ ...formData, cnpFor: e.target.value })
+                        }}
                         mask={
                             ReplaceList(formData.cnpFor, ['.', '-', '/']).length >= 11 ?
                             '##.###.###/####-##' : '###.###.###-###'

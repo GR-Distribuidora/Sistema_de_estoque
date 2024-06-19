@@ -296,15 +296,6 @@ export default function Clientes({ clientes, estados }) {
                 <hr className="mt-1" />
 
                 <StackPage>
-                    {/* <InputText
-                        required
-                        idFocus="codCli"
-                        label='Código do cliente'
-                        // disabled={edit !== null}
-                        data={{ value: formData.codCli }}
-                        onChange={e => setFormData({ ...formData, codCli: e.target.value })}
-                    /> */}
-
                     <InputText
                         required
                         label='Nome'
@@ -316,7 +307,10 @@ export default function Clientes({ clientes, estados }) {
                         required
                         label='CPF/CNPJ'
                         data={{ value: formData.cnpCpf }}
-                        onChange={e => setFormData({ ...formData, cnpCpf: e.target.value })}
+                        onChange={e => {
+                            if((/^[\d.\/\-]+$/).test(e.target.value) || e.target.value == '')
+                                setFormData({ ...formData, cnpCpf: e.target.value })
+                        }}
                         mask={
                             ReplaceList(formData.cnpCpf, ['.', '-', '/']).length >= 11 ?
                             '##.###.###/####-##' : '###.###.###-###'
