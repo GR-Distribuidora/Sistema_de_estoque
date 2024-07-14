@@ -29,7 +29,7 @@ const optionsFilter = [
 ]
 
 export default function Fornecedores({ fornecedores }) {
-    console.log(fornecedores)
+    // console.log(fornecedores)
 
     const [load, setLoad] = useState(false)
     const [snack, setSnack] = useState({ open: false, txt: '', color: '' })
