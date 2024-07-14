@@ -1,0 +1,15 @@
+.button {
+    width: 80%;
+    cursor: pointer;
+    transition: .3s;
+    background-color: #F0A502;
+}
+
+.selected {
+    background-color: #b98108!important;
+}
+
+.button:hover {
+    transition: .3s;
+    background-color: #b98108;
+}

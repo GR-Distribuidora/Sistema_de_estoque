@@ -1,0 +1,49 @@
+/* ------ Estilização do scrollbar do SidebarNav ------ */
+
+/* Tamanho da barra de navegação */
+.sidebarScroll::-webkit-scrollbar, .sidebarScrollX::-webkit-scrollbar{
+    width: 8px;
+}
+
+.sidebarScrollX::-webkit-scrollbar{
+    height: 10px;
+}
+
+/* Corpo da scrollbar */
+.sidebarScroll::-webkit-scrollbar-track{
+    background-color: transparent;
+}
+
+.table {
+    background-color: blue!important;
+}
+
+/* Cor background do scrollbar da tabela */
+.tableScrollBar {
+    background-color: #c2c2c9;
+}
+
+.tableScrollBar::-webkit-scrollbar-thumb {
+    background-color: gray;
+}
+
+
+/* width */
+.scrollY::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+.scrollY::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+}
+
+/* Handle */
+.scrollY::-webkit-scrollbar-thumb {
+    background: #888; 
+}
+
+/* Handle on hover */
+.scrollY::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+}
