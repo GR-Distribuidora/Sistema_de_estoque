@@ -92,6 +92,6 @@ export function ConvertTimestamp(date, flag = true) {
         // Obter o timestamp em milissegundos
         return dateObject.getTime()
     } else {
-        return new Date(date).toLocaleString()
+        return new Date(date).toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' })
     }
 }
